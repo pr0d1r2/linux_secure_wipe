@@ -138,7 +138,7 @@ function securely_wipe_devices() {
     echo "Securely wiping space (pass $PASS of $PASSES) from: $@ ..."
     for DEVICE in $@
     do
-      securely_wipe_device $DEVICE $PASS &
+      securely_wipe_device /dev/$DEVICE $PASS &
     done
     wait
     PASS=`expr $PASS + 1`

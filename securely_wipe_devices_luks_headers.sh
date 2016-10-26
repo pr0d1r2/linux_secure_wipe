@@ -37,7 +37,7 @@ function securely_wipe_devices_luks_headers() {
     echo "Securely wiping LUKS header (pass $PASS of $PASSES) from: $@ ..."
     for DEVICE in $@
     do
-      securely_wipe_device_luks_header $DEVICE $PASS &
+      securely_wipe_device_luks_header /dev/$DEVICE $PASS &
     done
     wait
     PASS=`expr $PASS + 1`
