@@ -1,5 +1,22 @@
 #!/bin/bash
 
+declare -a DISKS=()
+
+for P in $@
+do
+  case $P in
+    -a | --all-disks)
+      declare -a DISKS=`lsblk | grep "^sd" | cut -f 1 -d ' '`
+      ;;
+    sd[a-z])
+      DISKS+=($P)
+      ;;
+    /dev/sd[a-z])
+      DISKS+=(`basename $P`)
+      ;;
+  esac
+done
+
 function echorun() {
   echo "$@"
   $@ || return $?
@@ -129,4 +146,4 @@ function securely_wipe_devices() {
   done
 }
 
-securely_wipe_devices $@
+securely_wipe_devices $DISKS
